@@ -1,0 +1,10 @@
+{% if user %}
+    <ul>
+        <li>{{ user.id }}</li>
+        <li>{{ user.username }}</li>
+        <li>{{ user.nickname }}</li>
+        <li>{{ user.email }}</li>
+    </ul>
+{% else %}
+    <p>User not exists.</p>
+{% endif %}
