@@ -17,18 +17,21 @@ class ts:
 f = ts()
 f.foo1('h')
 
-def decorator(fn):
-    def handler(*args, **kvargs):
-        print(args)
-        print(kvargs)
-        print('de')
-        fn()
-    return handler
+class wrap(object):
+    def __init__(self, tag):
+        self.tag = tag
 
-@decorator
-def foo():
-    print('foo')
+    def __call__(self, fn):
+        def wrapped(*args, **kvargs):
+            setattr(args[0], 'tag', self.tag)
+            fn(*args, **kvargs)
+        return wrapped
 
-foo()
-
-
+class tso:
+    @wrap(tag= 'hi')
+    def foo(self):
+        if hasattr(self, 'tag'):
+            print('%s' % getattr(self, 'tag'))
+        
+ff = tso()
+ff.foo()
